@@ -22,11 +22,14 @@ def read():
     column_data = requests.get(base_url.format(
         'boards') + '/' + board_id + '/lists', auth_params).json()
 
-    # Вывод названий колонк и задач
+    # Вывод названий колонок и задач
     for column in column_data:
-        print(column['name'])
+
         task_data = requests.get(base_url.format(
             'lists') + '/' + column['id'] + '/cards', params=auth_params).json()
+
+        print(column['name'] + ' [{}]'.format(len(task_data)))
+
         if not task_data:
             print('\t' + 'Нет задач!')
             continue
